@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Over</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+        body {
+            background-color: #011627;
+            color: #FF0038;
+            font-family: 'Roboto Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 3px 3px 0 #2EC4B6;
+        }
+
+        p {
+            font-size: 1.5em;
+            text-shadow: 2px 2px 0 #2EC4B6;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: list-item;">
+        <h1>GAME OVER</h1>
+        <p id="control"></p>
+        <!-- Scoreboard -->
+        <div class="tab" style="display: flex; justify-content: center;">
+        <table id="scoreboard" border="2cm">
+            <tr>
+                <th>Level</th>
+                <th>Completion Time</th>
+            </tr>
+        </table>
+        </div>
+    </div>
+
+        
+</body>
+
+<script>
+    // JavaScript to handle the typing effect
+    const typedTextSpan = document.querySelector("#control");
+    const textArray = "Your journey has ended. Keep trying because control is an illusion ";
+    const typingDelay = 75;
+    let charIndex = 0;
+  
+    function type() {
+        if (charIndex < textArray.length) {
+            typedTextSpan.textContent += textArray[charIndex];
+            charIndex++;
+            setTimeout(type, typingDelay);
+        }
+    }
+  
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(type, 1800);
+    });
+
+    function updateScoreboard(level, time) {
+        // Get the scoreboard element
+        var scoreboard = document.getElementById('scoreboard');
+
+        // Create a new row and cells for the completed level
+        var row = document.createElement('tr');
+        var levelCell = document.createElement('td');
+        var timeCell = document.createElement('td');
+
+        // Set the text content of the cells
+        levelCell.textContent = 'Level ' + level;
+        timeCell.textContent = time;
+
+        // Add the cells to the row
+        row.appendChild(levelCell);
+        row.appendChild(timeCell);
+
+        // Add the new row to the scoreboard
+        scoreboard.appendChild(row);
+    }
+
+    window.onload = function() {
+        var completedLevels = JSON.parse(localStorage.getItem('completedLevels') || '[]');
+        completedLevels.forEach(function(levelData) {
+            updateScoreboard(levelData.level, levelData.time);
+        });
+    };
+</script>
+</html>

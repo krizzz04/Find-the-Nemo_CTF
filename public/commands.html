@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basic Linux Commands - Finding Nemo CTF Challenge</title>
+<style>
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  body {
+    background-color: #111;
+    color: #ddd;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 20px;
+    -moz-user-select: none;  /* Firefox */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -ms-user-select: none;  /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
+
+  }
+  body {
+      position: relative;
+      overflow: hidden;
+    }
+    #content {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      position: relative;
+    }
+    #overlay {
+      background-image: url('nobackground.jpeg');
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      display: none;
+    }
+
+  .container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: left;
+  }
+
+  h1, h2 {
+    text-align: center;
+    animation: blink 1s steps(5, start) infinite;
+  }
+
+  .command-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .command-list li {
+    margin-bottom: 10px;
+  }
+
+  .command {
+    font-weight: bold;
+  }
+
+  .description {
+    margin-left: 20px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .download-btn {
+    display: block;
+    width: 200px;
+    margin: 30px auto;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .download-btn:hover {
+    background-color: #555;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Finding Nemo Challenge </h1><br>
+  <h2>💀 Basic Linux Commands 💀</h2>
+  <h1 id="countdown">5:00</h1>
+  
+  <ul class="command-list">
+    <li><span class="command">ls:</span><span class="description">Lists files & directories.</span></li>
+    <li><span class="command">cd:</span><span class="description">Changes directory.</span></li>
+    <li><span class="command">pwd:</span><span class="description">Prints current working directory.</span></li>
+    <li><span class="command">cp:</span><span class="description">Copies files and directories.</span></li>
+    <li><span class="command">mv:</span><span class="description">Moves and renames files or directories.</span></li>
+    <li><span class="command">rm:</span><span class="description">Deletes files.</span></li>
+    <li><span class="command">mkdir:</span><span class="description">Creates a new directory.</span></li>
+    <li><span class="command">rmdir:</span><span class="description">Removes empty directories.</span></li>
+    <li><span class="command">touch:</span><span class="description">Creates a new empty file.</span></li>
+    <li><span class="command">strings:</span><span class="description">Use to take only human readable strings</span></li>
+    <li><span class="command">echo:</span><span class="description">Displays a line of text/string that is passed as an argument.</span></li>
+    <li><span class="command">grep:</span><span class="description">Searches for a specific string in files or output.</span></li>
+    <li><span class="command">sudo:</span><span class="description">Executes a command with superuser privileges.</span></li>
+  </ul>
+
+  <footer>
+    <p>gobuster is tool used to find hidden directories on website</p>
+    <p>Use -a attribute while listing files to see hidden contents!</p>
+    <p>Remember, These commands will be usefull in this journey,Dont try to copy this because you cant!!!. Use these commands wisely!</p>
+  </footer>
+  <div class="back" style="width: 100%; text-align: center;">
+  <a href="/" class="download-btn" >127.0.0.1</a>  
+</div>
+</div>
+<div id="overlay"></div>
+<script>
+  document.oncontextmenu = function() {
+    return false;
+}
+document.oncopy = function() {
+    return false;
+}
+document.oncut = function() {
+    return false;
+}
+document.onpaste = function() {
+    return false;
+}
+
+document.onkeydown = function(e) {
+    if(e.keyCode == 123) { // Prevent F12
+        return false;
+    }
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Prevent Ctrl+Shift+I
+        return false;
+    }
+    if (e.keyCode == 44) {
+    return false;  // Disable PrtSc button
+  }
+
+    // ... You can add more key combinations here ...
+}
+document.onkeydown = function(e) {
+      if (e.keyCode == 44) {
+        document.getElementById('overlay').style.display = 'block';
+        setTimeout(function() {
+          document.getElementById('overlay').style.display = 'none';
+        }, 100);
+      }
+    }
+
+    var timeLeft = 5 * 60; // 5 minutes in seconds
+        var countdownElement = document.getElementById('countdown');
+
+        var countdown = setInterval(function() {
+            timeLeft--;
+            var minutes = Math.floor(timeLeft / 60);
+            var seconds = timeLeft % 60;
+            countdownElement.textContent = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                window.location.href = 'access_denied.html'; // Redirect to another page
+            }
+        }, 1000);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finding Nemo CTF Challenge</title>
+<style>
+     @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  body {
+    background-color: #111;
+    color: #ddd;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+ h1{
+    font-size: 2.5em;
+    animation: blink 1s steps(5, start) infinite;
+ }
+.card {
+  background-color: #111;
+  border: 2px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+#scoreboard {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  color: #ddd;
+  font-family: 'Courier New', monospace;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="lo" style="display: flex; align-items: center;">
+  <img src="nobackground.jpeg" style="width: 100px; height: 100px; mix-blend-mode:difference;">
+  <h1 id="head"  style="width: 90%;" >Find Nemo Challenge</h1><br><br><br>
+</div>
+<h1 id="countdown">Die: 5:00</h1>
+  <p style="margin-left: auto; margin-right: auto;" id="keepgoing"></p>
+  
+  
+</div>
+<div class="container">
+  <!-- Level 1 Card -->
+  <div class="card" onclick="qn(1)">
+    Level 1
+  </div>
+  <div class="card" onclick="checkFlag(2)">
+    Level 2
+  </div>
+  <div class="card" onclick="checkFlag(3)">
+    Level 3
+  </div>
+  <div class="card" onclick="checkFlag(4)">
+    Level 4
+  </div>
+  <div class="card" onclick="checkFlag(5)">
+    Level 5
+  </div>
+  <div class="card" onclick="checkFlag(6)">
+    Level 6
+  </div>
+  <div class="card" onclick="checkFlag(7)">
+    Level 7
+  </div>
+  <div class="card" onclick="checkFlag(8)">
+    Level 8
+  </div>
+  <div class="card" onclick="checkFlag(9)">
+    Level 9
+  </div>
+  <!-- Level 2 Card -->
+  <!-- ... Repeat for each level ... -->
+
+  <!-- Level 10 Card -->
+  <div class="card" onclick="window.location.href='index.html';">
+    HOME
+  </div>
+  <div class="card" onclick="checkFlag(10)">
+    Level 10
+  </div>
+  <div class="card" onclick="window.location.href='index.html';">
+    QUIT
+  </div>
+
+</div>
+<br><br><br>
+<div class="fo" style="width: 100%; text-align: center;">
+<h1 >-CRACK THE GAME-</h1>
+<p style="margin-left: auto; margin-right: auto;" >💀 Please dont go home until you quit 💀</p>
+</div>
+
+<!-- Scoreboard -->
+<table id="scoreboard" border="2cm">
+  <tr>
+    <th>Level</th>
+    <th>Completion Time</th>
+  </tr>
+</table>
+
+
+<script>
+    // Example flags for demonstration purposes
+    const flags = {
+      1: 'ls',
+      // ... rest of your flags ...
+    };
+
+    function qn(level) {
+      var userFlag = prompt('Which command is used to list files in linux:');
+      if (userFlag === flags[level]) {
+        // If the flag is correct, proceed to download the file
+        // Replace 'path_to_file_for_level_' with the actual path to the file for each level
+        window.location.href = 'level' + level + '.zip';
+        alert('Correct flag! Downloading file...');
+        updateScoreboard(level);  // Update the scoreboard
+      } else {
+        alert('Incorrect flag. Please try again.');
+      }
+    }
+
+    function checkFlag(level) {
+      var userFlag = prompt('Enter flag for Level ' + level + ':');
+      fetch(`/checkFlag?level=${level}&flag=${userFlag}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.correct) {
+            window.location.href = 'level' + level + '.zip';
+            alert('Correct flag! Downloading file...');
+            updateScoreboard(level);  // Update the scoreboard
+          } else {
+            alert('Incorrect flag. Please try again.');
+          }
+        });
+    }
+
+//     function updateScoreboard(level) {
+//   // Get the current date and time
+//   var now = new Date();
+//   var timeString = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+
+//   // Get the scoreboard element
+//   var scoreboard = document.getElementById('scoreboard');
+
+//   // Create a new row and cells for the completed level
+//   var row = document.createElement('tr');
+//   var levelCell = document.createElement('td');
+//   var timeCell = document.createElement('td');
+
+//   // Set the text content of the cells
+//   levelCell.textContent = 'Level ' + level;
+//   timeCell.textContent = timeString;
+
+//   // Add the cells to the row
+//   row.appendChild(levelCell);
+//   row.appendChild(timeCell);
+
+//   // Add the new row to the scoreboard
+//   scoreboard.appendChild(row);
+// }
+
+var timeLeft = 0.6 * 60; // 5 minutes in seconds
+        var countdownElement = document.getElementById('countdown');
+
+        var countdown = setInterval(function() {
+            timeLeft--;
+            var minutes = Math.floor(timeLeft / 60);
+            var seconds = timeLeft % 60;
+            countdownElement.textContent = 'Die:'+minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                window.location.href = 'gameover.html'; // Redirect to another page
+            }
+        }, 1000);
+
+  function updateScoreboard(level) {
+        // Get the current date and time
+  var now = new Date();
+  var timeString = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+
+  // Get the scoreboard element
+  var scoreboard = document.getElementById('scoreboard');
+
+  // Create a new row and cells for the completed level
+  var row = document.createElement('tr');
+  var levelCell = document.createElement('td');
+  var timeCell = document.createElement('td');
+
+  // Set the text content of the cells
+  levelCell.textContent = 'Level ' + level;
+  timeCell.textContent = timeString;
+
+  // Add the cells to the row
+  row.appendChild(levelCell);
+  row.appendChild(timeCell);
+
+  // Add the new row to the scoreboard
+  scoreboard.appendChild(row);
+
+  // Save the updated scoreboard data in localStorage
+  var completedLevels = JSON.parse(localStorage.getItem('completedLevels') || '[]');
+        completedLevels.push({ level: level, time: timeString });
+        localStorage.setItem('completedLevels', JSON.stringify(completedLevels));
+    }
+    
+
+    window.onload = function() {
+        var completedLevels = JSON.parse(localStorage.getItem('completedLevels') || '[]');
+        completedLevels.forEach(function(levelData) {
+            updateScoreboard(levelData.level, levelData.time);
+        });
+    };
+
+
+  </script>
+
+<script>
+    // JavaScript to handle the typing effect
+    const typedTextSpan = document.querySelector("#keepgoing");
+    const textArray = "select your level ==> Enter the flag ==> keep-going";
+    const typingDelay = 75;
+    let charIndex = 0;
+  
+    function type() {
+      if (charIndex < textArray.length) {
+        typedTextSpan.textContent += textArray[charIndex];
+        charIndex++;
+        setTimeout(type, typingDelay);
+      }
+    }
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(type, 1800);
+    });
+  </script>
+</body>
+</html>

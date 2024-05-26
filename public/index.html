@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finding Nemo CTF Challenge</title>
+<style>
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+
+  body {
+    background-color: #111;
+    color: #ddd;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    animation: blink 1s steps(5, start) infinite;
+  }
+  h3{
+    animation: typing 10s steps(60, end), blink-caret .75s step-end infinite;
+  }
+
+  p, ul {
+    margin: 20px 0;
+  }
+
+  .download-btn {
+    display: block;
+    width: 200px;
+    margin: 30px auto;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .download-btn:hover {
+    background-color: #555;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lo" style="display: flex;">
+  <h1>Welcome to Finding Nemo CTF Challenge</h1>
+</div>
+  <h3 id="des"></h3>
+  
+  <!-- Basic Rules -->
+  <h2>💀 Basic Rules 💀</h2>
+  <div class="rules" style="width: 900px; font-size: large; ">
+  <ul>
+    <li>Individuals or teams can participate. Each team is allowed a maximum of 2 members.</li><br>
+    <li>Use of any legal tools and techniques is permitted unless specifically restricted by a challenge.</li><br>
+    <li>Points are awarded for each challenge solved. The faster you solve, the more points you earn.</li><br>
+    <li>Submit the correct flag via coordinators. Flags typically follow the format <code>{your_solution_here}</code>.</li><br>
+    <li>Sharing solutions, flags, or providing direct assistance to other teams is strictly prohibited.</li><br>
+    <li>The challenge will run from 9:45 to 11:45. Complete maximum levels</li><br>
+    <li>The team or individual with the highest level at the end of the competition will be declared the winner. In case of a tie, the team or individual who reached the score first will be ranked higher.</li>
+  </ul>
+    </div>
+  <!-- Link to the ROT13 Challenge Page -->
+  <div style="display: flex;">
+  <a href="/login" class="download-btn">Start Challenge</a>
+  <a href="/commands" class="download-btn">Basic Commands</a>
+    </div>
+</div>
+<script>
+    // JavaScript to handle the typing effect
+    const typedTextSpan = document.querySelector("#des");
+    const textArray = "Embark on a digital adventure to uncover hidden secrets and find Nemo. Are you ready to dive into the deep?";
+    const typingDelay = 75;
+    let charIndex = 0;
+  
+    function type() {
+      if (charIndex < textArray.length) {
+        typedTextSpan.textContent += textArray[charIndex];
+        charIndex++;
+        setTimeout(type, typingDelay);
+      }
+    }
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(type, 1800);
+    });
+  </script>
+</body>
+</html>
